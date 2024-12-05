@@ -5,7 +5,7 @@ import java.net.http.HttpResponse;
 
 public class GithubFetcher {
     public static void main(String[] args) {
-        // https://api.github.com/users/<username>/events
+
         if(args.length <1 ){
             System.out.println("You need to give a username :");
             return;
@@ -34,10 +34,11 @@ public class GithubFetcher {
 
     private static void parseResponse(String json){
         String[] temp = json.split("\\},\\{");
-        for(String event :temp){
+        for(String event : temp){
             if(event.contains("\"type\"")){
+                System.out.println("it got in the if");
                 int typeIndex = event.indexOf("\"type\"");
-                String eventType = event.substring(typeIndex + 8,event.indexOf("\"",typeIndex = 8));
+                String eventType = event.substring(typeIndex + 8,event.indexOf("\"",typeIndex + 8));
 
                 int repoIndex = event.indexOf("\"name\"");
                 int repoNameIndex = event.indexOf("\"name\"",repoIndex);
