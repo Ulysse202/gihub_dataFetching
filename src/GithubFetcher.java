@@ -23,7 +23,7 @@ public class GithubFetcher {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if(response.statusCode() == 200){
-                System.out.println("Raw JSON Response:\n" + response.body());
+                //System.out.println("Raw JSON Response:\n" + response.body());
                 parseResponse(response.body());
             }
 
