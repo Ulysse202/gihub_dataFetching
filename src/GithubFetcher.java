@@ -14,13 +14,15 @@ public class GithubFetcher {
         String URL = "https://api.github.com/users/"+args[0]+"/events";
 
         try{
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(URL))
-                    .header("Accept","application/vnd.github.v3+json")
-                    .build();
+            HttpResponse<String> response;
+            try (HttpClient client = HttpClient.newHttpClient()) {
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(new URI(URL))
+                        .header("Accept", "application/vnd.github.v3+json")
+                        .build();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            }
 
             if(response.statusCode() == 200){
                 //System.out.println("Raw JSON Response:\n" + response.body());
@@ -36,7 +38,7 @@ public class GithubFetcher {
         String[] temp = json.split("\\},\\{");
         for(String event : temp){
             if(event.contains("\"type\"")){
-                System.out.println("it got in the if");
+                //System.out.println("it got in the if");
                 int typeIndex = event.indexOf("\"type\"");
                 String eventType = event.substring(typeIndex + 8,event.indexOf("\"",typeIndex + 8));
 
